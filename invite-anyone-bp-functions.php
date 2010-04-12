@@ -1,5 +1,10 @@
 <?php
 
+require( dirname( __FILE__ ) . '/invite-anyone/by-email.php' );
+
+if ( is_admin() )
+	require( dirname( __FILE__ ) . '/invite-anyone/admin-panel.php' );
+
 class BP_Invite_Anyone extends BP_Group_Extension {
 
 	var $enable_nav_item = true;
@@ -116,7 +121,7 @@ function invite_anyone_create_screen_content( $event ) {
 							</li>
 						</ul>
 						
-						<p><?php _e( 'Or select members from the directory:', 'bp-invite-anyone' ) ?> <span class="ajax-loader"></span></p>
+						<p><?php _e( 'Select members from the directory:', 'bp-invite-anyone' ) ?> <span class="ajax-loader"></span></p>
 
 						<div id="invite-anyone-member-list">
 							<ul>
@@ -191,30 +196,37 @@ function invite_anyone_create_screen_content( $event ) {
 	<?php do_action( 'bp_before_group_send_invites_content' ) ?>
 
 
+	<?php if ( invite_anyone_access_test() && !bp_is_group_create() ) : ?>
+		<p><?php _e( 'Want to invite someone to the group who is not yet a member of the site?', 'bp-invite-anyone' ) ?> <a href="<?php echo bp_loggedin_user_domain() . BP_INVITE_ANYONE_SLUG . '/invite-new-members/group-invites/' . bp_get_group_id() ?>"><?php _e( 'Send invitations by email.', 'bp-invite-anyone' ) ?></a></p>
+	<?php endif; ?>
+
 	<?php if ( $event != 'create' ) : ?>
 			<form action="<?php bp_group_send_invite_form_action() ?>" method="post" id="send-invite-form">
 	<?php endif; ?>
 
+
+
 		<div class="left-menu">
-
-		<p><?php _e("Search for members to invite:", 'bp-invite-anyone') ?> &nbsp; <span class="ajax-loader"></span></p>
+					<p><?php _e("Search for members to invite:", 'bp-invite-anyone') ?> &nbsp; <span class="ajax-loader"></span></p>
 						
-						<ul class="first acfb-holder">
-							<li>
-								<input type="text" name="send-to-input" class="send-to-input" id="send-to-input" />
-							</li>
+					<ul class="first acfb-holder">
+						<li>
+							<input type="text" name="send-to-input" class="send-to-input" id="send-to-input" />
+						</li>
+					</ul>
+		
+					<p><?php _e( 'Select members from the directory:', 'bp-invite-anyone' ) ?> <span class="ajax-loader"></span></p>
+
+					<div id="invite-anyone-member-list">
+						<ul>
+							<?php bp_new_group_invite_member_list() ?>
 						</ul>
-
-		<p><?php _e( 'Or select members from the directory:', 'bp-invite-anyone' ) ?> <span class="ajax-loader"></span></p>
-
-			<div id="invite-anyone-member-list">
-				<ul>
-					<?php bp_new_group_invite_member_list() ?>
-				</ul>
-
-				<?php wp_nonce_field( 'groups_invite_uninvite_user', '_wpnonce_invite_uninvite_user' ) ?>
-			</div>
-
+		
+						<?php wp_nonce_field( 'groups_invite_uninvite_user', '_wpnonce_invite_uninvite_user' ) ?>
+					</div>
+				
+						
+				
 		</div>
 
 		<div class="main-column">
@@ -256,10 +268,12 @@ function invite_anyone_create_screen_content( $event ) {
 		</div>
 
 		<div class="clear"></div>
-
+		
+		<?php if ( $event != 'create' ) : ?>
 		<div class="submit">
 			<input type="submit" name="submit" id="submit" value="<?php _e( 'Send Invites', 'buddypress' ) ?>" />
 		</div>
+		<?php endif; ?>
 
 		<?php wp_nonce_field( 'groups_send_invites', '_wpnonce_send_invites') ?>
 
@@ -273,6 +287,11 @@ function invite_anyone_create_screen_content( $event ) {
 				?>
 	
 	<?php if ( $event != 'create' ) : ?>
+	
+
+	
+
+	
 		</form>
 	<?php endif; ?>
 
@@ -330,7 +349,7 @@ function get_members_invite_list( $user_id = false, $group_id ) {
 	if ( !$user_id )
 		$user_id = $bp->loggedin_user->id;
 	
-	$query = "SELECT * FROM {$wpdb->users}";
+	$query = "SELECT * FROM {$wpdb->users} WHERE spam=0";
 	$members = $wpdb->get_results( $query, ARRAY_A );
 
 	if ( !count($members) )
