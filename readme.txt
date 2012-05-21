@@ -32,7 +32,7 @@ Invite Anyone features optional integration with CloudSponge http://cloudsponge.
 
 * Dutch: Jesper Popma
 * French: Guillaume Coulon, Nicolas Mollet
-* German: Lars Berning
+* German: Lars Berning, Thorsten Wollenhöfer
 * Greek: Lena Stergatou
 * Italian: Luca Camellini
 * Norwegian: Stig Ulfsby
@@ -41,6 +41,9 @@ Invite Anyone features optional integration with CloudSponge http://cloudsponge.
 * Belarussian: Alexander Ovsov (<a href="http://webhostinggeeks.com/science">Web Geek Science</a>)
 
 == Changelog ==
+
+= 1.0.12 =
+* Ensure that spammed/inactive users are not returned by group invite autocomplete
 
 = 1.0.11 =
 * Adds per-user invitation limit option. Props Jeradin
