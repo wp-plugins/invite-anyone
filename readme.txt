@@ -44,7 +44,15 @@ Invite Anyone features optional integration with CloudSponge http://cloudsponge.
 * Spanish: Mauricio Camayo, Gregor Gimmy
 * Swedish: Alexander Berthelsen
 
+Additional details about the plugin can be found in the following languages:
+* Serbo-Croatian: <a href="http://science.webhostinggeeks.com/teleogistic">http://science.webhostinggeeks.com/teleogistic</a> 
+
 == Changelog ==
+
+= 1.0.24 =
+* Allow the access to Send Invites to the site admin
+* Better PHP 5.4+ adherence
+* Fix bug that prevented invitation step from appearing in group creation on some setups
 
 = 1.0.23 =
 * Adds sr_RS
