@@ -6,11 +6,11 @@ Requires at least: WP 3.2, BuddyPress 1.2.9
 Tested up to: WP 3.6.1, BuddyPress 1.8.1
 Stable tag: 1.0.25
 
-Makes BuddyPress's invitation features more powerful.
+Makes BuddyPress's invitation features more powerful. 
 
 == Description ==
 
-Invite Anyone has two components:
+Invite Anyone has two components :
 
 1) The ability to invite members to the site by email. The plugin creates a tab on each member's Profile page called "Send Invites", which contains a form where users can invite outsiders to join the site. There is a field for a custom message. Also, inviters can optionally select any number of their groups, and when the invitee accepts the invitation he or she automatically receive invitations to join those groups.
 
